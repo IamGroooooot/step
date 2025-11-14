@@ -17,16 +17,16 @@ To create automatic figure captions, use the standard Markdown image syntax `![a
 ### Syntax
 
 ```
-![Image description](https://image.radishzz.cc/image/gallery/06.webp)
+![Image description](/path/to/image.jpg)
 
-![_Image description](https://image.radishzz.cc/image/gallery/06.webp)
+![_Image description](/path/to/image.jpg)
 ```
 
 ### Output
 
-![Image description](https://image.radishzz.cc/image/gallery/06.webp)
+_[Example: Image with caption "Image description" would appear here]_
 
-![_Image description](https://image.radishzz.cc/image/gallery/06.webp)
+_[Example: Image without caption would appear here]_
 
 ## Admonition Blocks
 
