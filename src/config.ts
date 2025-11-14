@@ -97,6 +97,8 @@ export const themeConfig: ThemeConfig = {
     mastodon: {
       // default mastodon instance URL (can be overridden per-post)
       instanceURL: 'https://mastodon.social', // e.g., 'https://mastodon.social'
+      // default mastodon username (can be overridden per-post)
+      username: '9root', // e.g., 'username' (without @)
     },
   },
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END

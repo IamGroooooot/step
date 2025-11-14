@@ -28,4 +28,3 @@ Refer to the [Astro Deployment Guides](https://docs.astro.build/en/guides/deploy
 ## Updates
 
 Retypeset releases [new features](https://github.com/radishzzz/astro-theme-retypeset/issues/18) from time to time. Simply run `pnpm update-theme` to update the theme. If you encounter merge conflicts, please refer to [this video](https://youtu.be/lz5OuKzvadQ?si=sH_ALNgqxrYqNVQT) for manual resolution.
-

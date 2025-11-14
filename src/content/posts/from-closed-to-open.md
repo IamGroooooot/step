@@ -4,7 +4,7 @@ published: 2025-11-15
 description: 닫힌 질문에서 열린 질문으로 대화를 전환하기
 tags: ["reflection", "communication"]
 draft: false
-mastodonStatusId: 115549080341489191
+mastodonStatusId: "115549080341489191"
 ---
 
 대화가 자꾸 끊기던 이유를 *더 할 말이 없어서*라고 생각하곤 했었다.

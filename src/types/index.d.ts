@@ -52,6 +52,7 @@ export interface ThemeConfig {
     }
     mastodon?: {
       instanceURL?: string
+      username?: string
     }
   }
   seo?: {

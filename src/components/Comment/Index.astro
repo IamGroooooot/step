@@ -7,9 +7,10 @@ import { themeConfig } from '@/config'
 interface Props {
   mastodonStatusId?: string
   mastodonInstance?: string
+  mastodonUsername?: string
 }
 
-const { mastodonStatusId, mastodonInstance } = Astro.props
+const { mastodonStatusId, mastodonInstance, mastodonUsername } = Astro.props
 
 const { enabled: enableComment } = themeConfig.comment
 
@@ -23,10 +24,12 @@ const showGiscus = enableComment && Boolean(giscusRepo.trim())
 
 // Mastodon
 const defaultMastodonInstance = themeConfig.comment?.mastodon?.instanceURL ?? ''
+const defaultMastodonUsername = themeConfig.comment?.mastodon?.username ?? ''
 const effectiveInstance = mastodonInstance || defaultMastodonInstance
+const effectiveUsername = mastodonUsername || defaultMastodonUsername
 const showMastodon = enableComment && Boolean(mastodonStatusId?.trim()) && Boolean(effectiveInstance.trim())
 ---
 
 <!-- {showDisqus && <Disqus />} -->
 {showGiscus && <Giscus />}
-{showMastodon && <Mastodon statusId={mastodonStatusId!} instanceUrl={effectiveInstance} />}
+{showMastodon && <Mastodon statusId={mastodonStatusId!} instanceUrl={effectiveInstance} username={effectiveUsername} />}

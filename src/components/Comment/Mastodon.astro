@@ -2,9 +2,17 @@
 interface Props {
   statusId: string
   instanceUrl: string
+  username?: string
 }
 
-const { statusId, instanceUrl } = Astro.props
+const { statusId, instanceUrl, username } = Astro.props
+
+// Build the Mastodon post URL
+// If username is provided, use it to create direct link
+// Otherwise, just link to the instance
+const mastodonPostUrl = username
+  ? `${instanceUrl}/@${username}/${statusId}`
+  : instanceUrl
 ---
 
 <div id="mastodon-comments" class="no-heti mt-16">
@@ -12,7 +20,7 @@ const { statusId, instanceUrl } = Astro.props
     <h3 class="mb-2 text-lg c-primary font-bold">Comments</h3>
     <p class="text-sm c-secondary">
       Join the conversation on <a
-        href={`${instanceUrl}/@${statusId.split('/')[0]}/${statusId}`}
+        href={mastodonPostUrl}
         target="_blank"
         rel="noopener noreferrer"
         class="mastodon-link"
@@ -34,12 +42,11 @@ async function loadMastodonComments() {
     return
 
   try {
-    const response = await fetch(
-      `${instanceUrl}/api/v1/statuses/${statusId}/context`,
-    )
+    const apiUrl = `${instanceUrl}/api/v1/statuses/${statusId}/context`
+    const response = await fetch(apiUrl)
 
     if (!response.ok) {
-      throw new Error('Failed to fetch comments')
+      throw new Error(`Failed to fetch comments: ${response.status}`)
     }
 
     const data = await response.json()
@@ -124,8 +131,7 @@ async function loadMastodonComments() {
 
     container.innerHTML = commentTree.map(comment => renderComment(comment)).join('')
   }
-  catch (error) {
-    console.error('Error loading Mastodon comments:', error)
+  catch {
     container.innerHTML = `
         <div class="mastodon-error c-secondary text-sm">
           Failed to load comments. Please try again later.
