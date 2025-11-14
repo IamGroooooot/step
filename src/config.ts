@@ -82,15 +82,15 @@ export const themeConfig: ThemeConfig = {
     // giscus
     // https://giscus.app/
     giscus: {
-      repo: '',
-      repoId: '',
-      category: '',
-      categoryId: '',
+      repo: 'IamGroooooot/step',
+      repoId: 'R_kgDOQVv2LQ',
+      category: 'General',
+      categoryId: 'DIC_kwDOQVv2Lc4Cxy68',
       mapping: 'pathname',
-      strict: '0',
+      strict: '1',
       reactionsEnabled: '1',
-      emitMetadata: '0',
-      inputPosition: 'bottom',
+      emitMetadata: '1',
+      inputPosition: 'top',
     },
     // mastodon
     // Use Mastodon posts as comment threads
