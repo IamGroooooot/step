@@ -1,10 +1,9 @@
 ---
-lang: ko
+lang: en
 ---
 
-가끔은 코드 리팩터링하듯 삶과 일도 다시 정돈하고 싶을 때가 있습니다.
-여기는 그 과정에서 제가 관찰하고 발견하고 실험한 것들을 조용히 모아두는 공간입니다.
+Sometimes I feel the urge to refactor my life and work the way I refactor code.
+This is where I quietly gather the observations, discoveries, and experiments that emerge along the way.
 
-완성된 답을 모으는 곳이라기보다,
-불확실한 순간에 저와 제 주변이 한 발 더 나아가기 위해
-어떤 전략을 짜고 연습해왔는지 남겨두는 노트에 가깝습니다.
+It isn’t a repository of finished answers.
+It’s closer to a working notebook—capturing the strategies I’ve crafted and the practices I’ve rehearsed so that, in moments of uncertainty, I and those around me can take one more deliberate step forward.
