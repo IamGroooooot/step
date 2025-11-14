@@ -87,7 +87,9 @@ async function _getPosts(lang?: string) {
     ({ data }: CollectionEntry<'posts'>) => {
       // Show drafts in dev mode only
       const shouldInclude = import.meta.env.DEV || !data.draft
-      return shouldInclude && (data.lang === currentLang || data.lang === '')
+      // Posts without lang default to Korean
+      const postLang = data.lang === '' ? 'ko' : data.lang
+      return shouldInclude && postLang === currentLang
     },
   )
 
@@ -228,10 +230,11 @@ async function _getTagSupportedLangs(tag: string) {
   const { allLocales } = await import('@/config')
 
   return allLocales.filter(locale =>
-    posts.some(post =>
-      post.data.tags?.includes(tag)
-      && (post.data.lang === locale || post.data.lang === ''),
-    ),
+    posts.some((post) => {
+      // Posts without lang default to Korean
+      const postLang = post.data.lang === '' ? 'ko' : post.data.lang
+      return post.data.tags?.includes(tag) && postLang === locale
+    }),
   )
 }
 
