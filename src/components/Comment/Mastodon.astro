@@ -1,0 +1,264 @@
+---
+interface Props {
+  statusId: string
+  instanceUrl: string
+}
+
+const { statusId, instanceUrl } = Astro.props
+---
+
+<div id="mastodon-comments" class="no-heti mt-16">
+  <div class="mastodon-header mb-6">
+    <h3 class="mb-2 text-lg c-primary font-bold">Comments</h3>
+    <p class="text-sm c-secondary">
+      Join the conversation on <a
+        href={`${instanceUrl}/@${statusId.split('/')[0]}/${statusId}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mastodon-link"
+                               >
+        Mastodon
+      </a>
+    </p>
+  </div>
+
+  <div id="mastodon-comments-list" class="space-y-4">
+    <div class="mastodon-loading c-secondary">Loading comments...</div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ statusId, instanceUrl }}>
+async function loadMastodonComments() {
+  const container = document.getElementById('mastodon-comments-list')
+  if (!container || !statusId || !instanceUrl)
+    return
+
+  try {
+    const response = await fetch(
+      `${instanceUrl}/api/v1/statuses/${statusId}/context`,
+    )
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch comments')
+    }
+
+    const data = await response.json()
+    const comments = data.descendants.filter(
+      comment => comment.in_reply_to_id === statusId,
+    )
+
+    if (comments.length === 0) {
+      container.innerHTML = `
+          <div class="mastodon-no-comments c-secondary text-sm">
+            No comments yet. Be the first to comment on Mastodon!
+          </div>
+        `
+      return
+    }
+
+    // Build comment tree
+    function buildCommentTree(allComments, parentId) {
+      const replies = allComments.filter(
+        comment => comment.in_reply_to_id === parentId,
+      )
+
+      return replies.map((reply) => {
+        const nestedReplies = buildCommentTree(allComments, reply.id)
+        return nestedReplies.length > 0
+          ? { ...reply, replies: nestedReplies }
+          : reply
+      })
+    }
+
+    const commentTree = buildCommentTree(data.descendants, statusId)
+
+    // Render comments
+    function renderComment(comment, level = 0) {
+      const indent = level > 0 ? `style="margin-left: ${level * 1.5}rem"` : ''
+      const avatar = comment.account.avatar
+      const displayName = comment.account.display_name || comment.account.username
+      const username = comment.account.acct
+      const date = new Date(comment.created_at).toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      })
+
+      let html = `
+          <div class="mastodon-comment" ${indent}>
+            <div class="mastodon-comment-header">
+              <img src="${avatar}" alt="${displayName}" class="mastodon-avatar" />
+              <div class="mastodon-comment-meta">
+                <div class="mastodon-comment-author">
+                  <a href="${comment.account.url}" target="_blank" rel="noopener noreferrer" class="mastodon-link">
+                    <strong>${displayName}</strong>
+                  </a>
+                  <span class="mastodon-username">@${username}</span>
+                </div>
+                <div class="mastodon-comment-time">
+                  <a href="${comment.url}" target="_blank" rel="noopener noreferrer" class="mastodon-link">
+                    ${date}
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="mastodon-comment-content">
+              ${comment.content}
+            </div>
+            <div class="mastodon-comment-stats">
+              ${comment.replies_count > 0 ? `<span>💬 ${comment.replies_count}</span>` : ''}
+              ${comment.reblogs_count > 0 ? `<span>🔁 ${comment.reblogs_count}</span>` : ''}
+              ${comment.favourites_count > 0 ? `<span>⭐ ${comment.favourites_count}</span>` : ''}
+            </div>
+          </div>
+        `
+
+      if (comment.replies && comment.replies.length > 0) {
+        html += comment.replies
+          .map(reply => renderComment(reply, level + 1))
+          .join('')
+      }
+
+      return html
+    }
+
+    container.innerHTML = commentTree.map(comment => renderComment(comment)).join('')
+  }
+  catch (error) {
+    console.error('Error loading Mastodon comments:', error)
+    container.innerHTML = `
+        <div class="mastodon-error c-secondary text-sm">
+          Failed to load comments. Please try again later.
+        </div>
+      `
+  }
+}
+
+let observer = null
+
+function setupMastodonComments() {
+  observer?.disconnect()
+
+  const container = document.getElementById('mastodon-comments')
+  if (!container)
+    return
+
+  observer = new IntersectionObserver(
+    (entries) => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        loadMastodonComments()
+        observer?.disconnect()
+      }
+    },
+    { rootMargin: '500px' },
+  )
+
+  observer.observe(container)
+}
+
+function cleanup() {
+  observer?.disconnect()
+  observer = null
+}
+
+document.addEventListener('astro:page-load', setupMastodonComments)
+document.addEventListener('astro:before-swap', cleanup)
+setupMastodonComments()
+</script>
+
+<style>
+  #mastodon-comments {
+    color: oklch(var(--un-preset-theme-colors-secondary));
+  }
+
+  .mastodon-header h3 {
+    color: oklch(var(--un-preset-theme-colors-primary));
+  }
+
+  .mastodon-link {
+    color: oklch(var(--un-preset-theme-colors-primary));
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .mastodon-link:hover {
+    opacity: 0.7;
+  }
+
+  .mastodon-comment {
+    padding: 1rem;
+    border-left: 2px solid oklch(var(--un-preset-theme-colors-primary) / 0.25);
+    margin-bottom: 1rem;
+  }
+
+  .mastodon-comment-header {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .mastodon-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .mastodon-comment-meta {
+    flex: 1;
+  }
+
+  .mastodon-comment-author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .mastodon-username {
+    color: oklch(var(--un-preset-theme-colors-secondary) / 0.7);
+    font-size: 0.875rem;
+  }
+
+  .mastodon-comment-time {
+    font-size: 0.875rem;
+    color: oklch(var(--un-preset-theme-colors-secondary) / 0.7);
+  }
+
+  .mastodon-comment-content {
+    margin-top: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .mastodon-comment-content :global(p) {
+    margin-bottom: 0.5rem;
+  }
+
+  .mastodon-comment-content :global(a) {
+    color: oklch(var(--un-preset-theme-colors-primary));
+    text-decoration: none;
+  }
+
+  .mastodon-comment-content :global(a:hover) {
+    text-decoration: underline;
+  }
+
+  .mastodon-comment-stats {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: oklch(var(--un-preset-theme-colors-secondary) / 0.7);
+  }
+
+  .mastodon-loading,
+  .mastodon-no-comments,
+  .mastodon-error {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .mastodon-error {
+    color: oklch(0.6 0.15 20);
+  }
+</style>

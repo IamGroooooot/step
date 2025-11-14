@@ -24,6 +24,9 @@ const posts = defineCollection({
       abbrlink => !abbrlink || /^[a-z0-9\-]*$/.test(abbrlink),
       { message: 'Abbrlink can only contain lowercase letters, numbers and hyphens' },
     ),
+    // Mastodon comment integration
+    mastodonStatusId: z.string().optional().default(''),
+    mastodonInstance: z.string().optional().default(''),
   }),
 })
 

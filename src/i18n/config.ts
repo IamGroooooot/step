@@ -11,12 +11,5 @@ export const giscusLocaleMap: Record<string, string> = {
   en: 'en',
 }
 
-// Waline Language Map
-// https://waline.js.org/en/guide/features/i18n.html
-export const walineLocaleMap: Record<string, string> = {
-  ko: 'ko-KR',
-  en: 'en-US',
-}
-
 // Supported Languages
 export const supportedLangs = Object.keys(langMap).flat()

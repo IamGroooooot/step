@@ -92,21 +92,11 @@ export const themeConfig: ThemeConfig = {
       emitMetadata: '0',
       inputPosition: 'bottom',
     },
-    // waline
-    // https://waline.js.org/en/
-    waline: {
-      // server url
-      serverURL: 'https://retypeset-comment.radishzz.cc',
-      // emoji url
-      emoji: [
-        'https://unpkg.com/@waline/emojis@1.2.0/tw-emoji',
-        // 'https://unpkg.com/@waline/emojis@1.2.0/bmoji',
-        // more emojis: https://waline.js.org/en/guide/features/emoji.html
-      ],
-      // gif search
-      search: false, // true, false
-      // image uploader
-      imageUploader: false, // true, false
+    // mastodon
+    // Use Mastodon posts as comment threads
+    mastodon: {
+      // default mastodon instance URL (can be overridden per-post)
+      instanceURL: 'https://mastodon.social', // e.g., 'https://mastodon.social'
     },
   },
   // COMMENT SETTINGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END

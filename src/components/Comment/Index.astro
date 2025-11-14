@@ -1,8 +1,15 @@
 ---
 // import Disqus from '@/components/Comment/Disqus.astro'
 import Giscus from '@/components/Comment/Giscus.astro'
-import Waline from '@/components/Comment/Waline.astro'
+import Mastodon from '@/components/Comment/Mastodon.astro'
 import { themeConfig } from '@/config'
+
+interface Props {
+  mastodonStatusId?: string
+  mastodonInstance?: string
+}
+
+const { mastodonStatusId, mastodonInstance } = Astro.props
 
 const { enabled: enableComment } = themeConfig.comment
 
@@ -14,11 +21,12 @@ const { enabled: enableComment } = themeConfig.comment
 const giscusRepo = themeConfig.comment?.giscus?.repo ?? ''
 const showGiscus = enableComment && Boolean(giscusRepo.trim())
 
-// Waline
-const walineURL = themeConfig.comment?.waline?.serverURL ?? ''
-const showWaline = enableComment && Boolean(walineURL.trim())
+// Mastodon
+const defaultMastodonInstance = themeConfig.comment?.mastodon?.instanceURL ?? ''
+const effectiveInstance = mastodonInstance || defaultMastodonInstance
+const showMastodon = enableComment && Boolean(mastodonStatusId?.trim()) && Boolean(effectiveInstance.trim())
 ---
 
 <!-- {showDisqus && <Disqus />} -->
 {showGiscus && <Giscus />}
-{showWaline && <Waline />}
+{showMastodon && <Mastodon statusId={mastodonStatusId!} instanceUrl={effectiveInstance} />}
