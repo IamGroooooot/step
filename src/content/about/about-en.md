@@ -1,5 +1,10 @@
 ---
-lang: en
+lang: ko
 ---
 
-Retypeset is a static blog theme based on the [Astro](https://astro.build/) framework. Inspired by [Typography](https://astro-theme-typography.vercel.app/), Retypeset establishes a new visual standard and reimagines the layout of all pages, creating a reading experience reminiscent of paper books, reviving the beauty of typography. Details in every sight, elegance in every space.
+가끔은 코드 리팩터링하듯 삶과 일도 다시 정돈하고 싶을 때가 있습니다.
+여기는 그 과정에서 제가 관찰하고 발견하고 실험한 것들을 조용히 모아두는 공간입니다.
+
+완성된 답을 모으는 곳이라기보다,
+불확실한 순간에 저와 제 주변이 한 발 더 나아가기 위해
+어떤 전략을 짜고 연습해왔는지 남겨두는 노트에 가깝습니다.
