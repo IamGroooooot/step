@@ -50,9 +50,6 @@ export interface ThemeConfig {
       emitMetadata?: '0' | '1'
       inputPosition?: 'top' | 'bottom'
     }
-    twikoo?: {
-      envId?: string
-    }
     waline?: {
       serverURL?: string
       emoji?: string[]
@@ -65,8 +62,6 @@ export interface ThemeConfig {
     verification?: {
       google?: string
       bing?: string
-      yandex?: string
-      baidu?: string
     }
     googleAnalyticsID?: string
     umamiAnalyticsID?: string
