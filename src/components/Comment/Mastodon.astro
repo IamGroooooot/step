@@ -172,99 +172,133 @@ document.addEventListener('astro:before-swap', cleanup)
 setupMastodonComments()
 </script>
 
-<style>
+<style is:global>
   #mastodon-comments {
     color: oklch(var(--un-preset-theme-colors-secondary));
   }
 
-  .mastodon-header h3 {
+  #mastodon-comments .mastodon-header h3 {
     color: oklch(var(--un-preset-theme-colors-primary));
   }
 
-  .mastodon-link {
+  #mastodon-comments .mastodon-link {
     color: oklch(var(--un-preset-theme-colors-primary));
     text-decoration: none;
     transition: opacity 0.2s;
   }
 
-  .mastodon-link:hover {
+  #mastodon-comments .mastodon-link:hover {
     opacity: 0.7;
   }
 
-  .mastodon-comment {
-    padding: 1rem;
-    border-left: 2px solid oklch(var(--un-preset-theme-colors-primary) / 0.25);
-    margin-bottom: 1rem;
+  #mastodon-comments .mastodon-comment {
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: 0.85rem;
+    background-color: oklch(var(--un-preset-theme-colors-secondary) / 0.06);
+    border: 1px solid oklch(var(--un-preset-theme-colors-secondary) / 0.16);
   }
 
-  .mastodon-comment-header {
+  #mastodon-comments .mastodon-comment-header {
     display: flex;
     gap: 0.75rem;
     margin-bottom: 0.75rem;
   }
 
-  .mastodon-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 0.5rem;
+  #mastodon-comments .mastodon-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
     flex-shrink: 0;
   }
 
-  .mastodon-comment-meta {
+  #mastodon-comments .mastodon-comment-meta {
     flex: 1;
+    min-width: 0;
   }
 
-  .mastodon-comment-author {
+  #mastodon-comments .mastodon-comment-author {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 0.5rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.1rem;
+    font-size: 0.9rem;
   }
 
-  .mastodon-username {
+  #mastodon-comments .mastodon-comment-author strong {
+    font-weight: 600;
+  }
+
+  #mastodon-comments .mastodon-username {
     color: oklch(var(--un-preset-theme-colors-secondary) / 0.7);
-    font-size: 0.875rem;
+    font-size: 0.8rem;
   }
 
-  .mastodon-comment-time {
-    font-size: 0.875rem;
+  #mastodon-comments .mastodon-comment-time {
+    font-size: 0.8rem;
     color: oklch(var(--un-preset-theme-colors-secondary) / 0.7);
   }
 
-  .mastodon-comment-content {
-    margin-top: 0.5rem;
+  #mastodon-comments .mastodon-comment-content {
+    margin-top: 0.4rem;
     line-height: 1.6;
+    font-size: 0.95rem;
   }
 
-  .mastodon-comment-content :global(p) {
-    margin-bottom: 0.5rem;
+  #mastodon-comments .mastodon-comment-content p {
+    margin: 0 0 0.4rem;
   }
 
-  .mastodon-comment-content :global(a) {
+  #mastodon-comments .mastodon-comment-content img,
+  #mastodon-comments .mastodon-comment-content video,
+  #mastodon-comments .mastodon-comment-content iframe {
+    display: block;
+    max-width: 210px;
+    max-height: 210px;
+    width: 100%;
+    border-radius: 0.75rem;
+    margin: 0.5rem 0 0.25rem;
+    object-fit: cover;
+  }
+
+  #mastodon-comments .mastodon-comment-content figure,
+  #mastodon-comments .mastodon-comment-content .status-card {
+    margin: 0.5rem 0 0.25rem;
+    max-width: 210px;
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+
+  #mastodon-comments .mastodon-comment-content .status-card img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  #mastodon-comments .mastodon-comment-content a {
     color: oklch(var(--un-preset-theme-colors-primary));
     text-decoration: none;
   }
 
-  .mastodon-comment-content :global(a:hover) {
+  #mastodon-comments .mastodon-comment-content a:hover {
     text-decoration: underline;
   }
 
-  .mastodon-comment-stats {
+  #mastodon-comments .mastodon-comment-stats {
     display: flex;
     gap: 1rem;
-    margin-top: 0.5rem;
-    font-size: 0.875rem;
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
     color: oklch(var(--un-preset-theme-colors-secondary) / 0.7);
   }
 
-  .mastodon-loading,
-  .mastodon-no-comments,
-  .mastodon-error {
+  #mastodon-comments .mastodon-loading,
+  #mastodon-comments .mastodon-no-comments,
+  #mastodon-comments .mastodon-error {
     padding: 1rem;
     text-align: center;
   }
 
-  .mastodon-error {
+  #mastodon-comments .mastodon-error {
     color: oklch(0.6 0.15 20);
   }
 </style>
