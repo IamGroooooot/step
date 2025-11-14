@@ -119,11 +119,6 @@ comment: {
     emitMetadata: '0'
     inputPosition: 'bottom'
   }
-  // twikoo comment system
-  twikoo: {
-    envId: ''
-    // version: frontend version can be changed in package.json
-  }
   // waline comment system
   waline: {
     // server url
@@ -154,10 +149,6 @@ seo: {
     google: 'AUCrz5F1e5qbnmKKDXl2Sf8u6y0kOpEO1wLs6HMMmlM'
     // bing webmaster tools
     bing: '64708CD514011A7965C84DDE1D169F87'
-    // yandex webmaster
-    yandex: ''
-    // baidu search
-    baidu: ''
   }
   // google analytics
   googleAnalyticsID: ''

@@ -22,7 +22,7 @@ const { title, subtitle, description, i18nTitle, author, favicon } = themeConfig
 const { mode: defaultMode, light: { background: lightMode }, dark: { background: darkMode } } = themeConfig.color
 const { katex: katexEnabled, reduceMotion } = themeConfig.global
 const { verification = {}, twitterID = '', googleAnalyticsID = '', umamiAnalyticsID = '', apiflashKey = '' } = themeConfig.seo ?? {}
-const { google = '', bing = '', yandex = '', baidu = '' } = verification
+const { google = '', bing = '' } = verification
 const { customGoogleAnalyticsJS = '', customUmamiAnalyticsJS = '' } = themeConfig.preload ?? {}
 
 // Site Metadata
@@ -53,6 +53,9 @@ const pageImage = postSlug
 <meta name="author" content={author} />
 <meta name="generator" content={Astro.generator} />
 <meta name="theme-color" content={metaTheme} />
+
+<!-- Fonts -->
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
 
 <!-- Preload -->
 <link rel="preload" href={`${base}/fonts/EarlySummer-VF-Split/EarlySummer-VF-Subset.woff2`} as="font" type="font/woff2" crossorigin />
@@ -87,8 +90,6 @@ const pageImage = postSlug
 <!-- Site Verification -->
 {google && <meta name="google-site-verification" content={google} />}
 {bing && <meta name="msvalidate.01" content={bing} />}
-{yandex && <meta name="yandex-verification" content={yandex} />}
-{baidu && <meta name="baidu-site-verification" content={baidu} />}
 
 <!-- Global View Transition -->
 <ClientRouter fallback="none" />
